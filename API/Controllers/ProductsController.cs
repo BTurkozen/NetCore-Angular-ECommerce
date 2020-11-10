@@ -24,12 +24,25 @@ namespace API.Controllers
             return Ok(data);
         }
 
-        
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var dataId = await _pRepository.GetProductByIdAsync(id);
             return dataId;
+        }
+
+        [HttpGet("types")]
+        public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
+        {
+            return Ok(await _pRepository.GetProductTypesAsync());
+        }
+
+        [HttpGet("brands")]
+        public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
+        {
+
+            return Ok(await _pRepository.GetProductBrandsAsync());
         }
     }
 }

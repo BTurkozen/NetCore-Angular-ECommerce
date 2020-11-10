@@ -36,9 +36,27 @@ namespace API.Infrastructure.Implements
             return await _context.Products.ToListAsync();
         }
 
+        /// <summary>
+        /// Get All Product Type List
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IReadOnlyList<ProductType>> GetProductTypesAsync()
+        {
+            return await _context.ProductTypes.ToListAsync();
+        }
+
+        /// <summary>
+        /// Get All Product Brand List
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync()
+        {
+            return await _context.ProductBrands.ToListAsync();
+        }
+
 
         //Dependency Injection
         //Somutluktan uzaklasıp işi soyutlaştırmak için bize yaklaşımı sağlıyacak bir özellik.
-        
+
     }
 }
