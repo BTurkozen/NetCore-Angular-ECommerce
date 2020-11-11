@@ -4,10 +4,13 @@ namespace API.Core.Specifications
 {
     public class ProductsWithProductTypeAndBrandsSpecification : BaseSpecification<Product>
     {
-        public ProductsWithProductTypeAndBrandsSpecification(ProductSpecParams productSpecParams) : base(x =>
-            (!productSpecParams.BrandId.HasValue || x.ProductBrandId == productSpecParams.BrandId)
-        &&
-        (!productSpecParams.TypeId.HasValue || x.ProductTypeId == productSpecParams.TypeId)
+        public ProductsWithProductTypeAndBrandsSpecification(ProductSpecParams productSpecParams) :
+            base(x =>
+                        (string.IsNullOrWhiteSpace(productSpecParams.Search) || x.Name.ToLower().Contains(productSpecParams.Search))
+                            &&
+                        (!productSpecParams.BrandId.HasValue || x.ProductBrandId == productSpecParams.BrandId)
+                            &&
+                        (!productSpecParams.TypeId.HasValue || x.ProductTypeId == productSpecParams.TypeId)
         )
         {
             AddInclude(x => x.ProductBrand);

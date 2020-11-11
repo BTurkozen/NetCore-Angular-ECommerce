@@ -4,7 +4,7 @@ using System.Text;
 
 namespace API.Core.Specifications
 {
-   public class ProductSpecParams
+    public class ProductSpecParams
     {
         private const int MaxPageSize = 50;
         public int PageIndex { get; set; } = 1;
@@ -18,6 +18,18 @@ namespace API.Core.Specifications
         public int? BrandId { get; set; }
         public int? TypeId { get; set; }
         public string Sort { get; set; }
+
+        //Encapsulation
+        private string _search;
+        public string Search
+        {
+            get { return _search; }
+            set
+            {
+
+                _search = value.ToLower();
+            }
+        }
 
     }
 }
