@@ -10,17 +10,25 @@ namespace API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductRepository _pRepository;
+        private readonly IGenericRepository<Product> _productRepository;
+        private readonly IGenericRepository<ProductBrand> _productBrandRepository;
+        private readonly IGenericRepository<ProductType> _productTypeRepository;
 
-        public ProductsController(IProductRepository pRepository)
+        public ProductsController(
+            IGenericRepository<Product> productRepository,
+            IGenericRepository<ProductBrand> productBrandRepository,
+            IGenericRepository<ProductType> productTypeRepository
+            )
         {
-            _pRepository = pRepository;
+            _productRepository = productRepository;
+            _productBrandRepository = productBrandRepository;
+            _productTypeRepository = productTypeRepository;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
-            var data = await _pRepository.GetProductAsync();
+            var data = await _productRepository.ListAllAsync();
             return Ok(data);
         }
 
@@ -28,21 +36,21 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var dataId = await _pRepository.GetProductByIdAsync(id);
+            var dataId = await _productRepository.GetByIdAsync(id);
             return dataId;
         }
 
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
         {
-            return Ok(await _pRepository.GetProductTypesAsync());
+            return Ok(await _productTypeRepository.ListAllAsync());
         }
 
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
 
-            return Ok(await _pRepository.GetProductBrandsAsync());
+            return Ok(await _productBrandRepository.ListAllAsync());
         }
     }
 }
