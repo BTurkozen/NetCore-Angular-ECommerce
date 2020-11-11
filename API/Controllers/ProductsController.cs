@@ -32,21 +32,11 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts(string sort)
         {
-            var spec = new ProductsWithProductTypeAndBrandsSpecification();
+            var spec = new ProductsWithProductTypeAndBrandsSpecification(sort);
 
             var data = await _productRepository.ListAsync(spec);
-            //return data.Select(pro => new ProductToReturnDto
-            //{
-            //    Id = pro.Id,
-            //    Name = pro.Name,
-            //    Description = pro.Description,
-            //    PictureUrl = pro.PictureUrl,
-            //    Price = pro.Price,
-            //    ProductType = pro.ProductType != null ? pro.ProductType.Name : string.Empty,
-            //    ProductBrand = pro.ProductBrand != null ? pro.ProductBrand.Name : string.Empty
-            //}).ToList();
 
             return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(data));
 
@@ -60,18 +50,6 @@ namespace API.Controllers
             var spec = new ProductsWithProductTypeAndBrandsSpecification(id);
 
             var product = await _productRepository.GetEntityWithSpec(spec);
-            //return new ProductToReturnDto
-            //{
-            //    Id = product.Id,
-            //    Name = product.Name,
-            //    Description = product.Description,
-            //    PictureUrl = product.PictureUrl,
-            //    Price = product.Price,
-            //    ProductType = product.ProductType != null? product.ProductType.Name : string.Empty,
-            //    ProductBrand = product.ProductBrand != null ? product.ProductBrand.Name : string.Empty
-            //};
-
-            //Yukarıdaki işlemin yerine mapper kullanarak yapıcaz işlemlerimizi.
 
             return _mapper.Map<Product, ProductToReturnDto>(product);
         }
