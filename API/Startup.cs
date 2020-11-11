@@ -1,6 +1,8 @@
 using API.Core.Interfaces;
+using API.Helpers;
 using API.Infrastructure.DataContext;
 using API.Infrastructure.Implements;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +25,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddAutoMapper(typeof(MappingProfiles));
             services.AddDbContext<StoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //Dependincy Injection
