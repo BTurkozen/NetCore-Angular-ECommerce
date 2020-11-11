@@ -10,5 +10,18 @@ namespace API.Core.Specifications
         List<Expression<Func<T,object>>> Includes { get; }
         Expression<Func<T, object>> OrderBy { get; }
         Expression<Func<T,object>> OrderByDescending { get; }
+
+        /// <summary>
+        /// Ekranda gösterilecek rakam miktarı
+        /// </summary>
+        int Take { get; }
+        /// <summary>
+        /// kac ürünü atlıyacağı rakam miktarı
+        /// </summary>
+        int Skip { get; }
+        /// <summary>
+        /// Sayfalanma yapılsınmı yapılmasınmı?
+        /// </summary>
+        bool IsPagingEnabled { get; }
     }
 }
