@@ -1,7 +1,6 @@
-using API.Core.Interfaces;
+using API.Extensions;
 using API.Helpers;
 using API.Infrastructure.DataContext;
-using API.Infrastructure.Implements;
 using API.Middleware;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -9,8 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace API
 {
@@ -30,12 +27,13 @@ namespace API
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddDbContext<StoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //Dependincy Injection
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
+            //Custom Middleware Extensions
+            services.ApplicationServices();
+            services.AddSwaggerDocumentation();
+
+
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //if (env.IsDevelopment())
@@ -52,6 +50,9 @@ namespace API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //Custom Middleware Extensions
+            app.UserSwaggerDocumentation();
 
             app.UseEndpoints(endpoints =>
             {
