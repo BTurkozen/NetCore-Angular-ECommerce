@@ -6,7 +6,8 @@ import { IPagination } from '../shared/models/IPagination';
   providedIn: 'root',
 })
 export class ShopService {
-  baseUrl: 'https://localhost:44321/api/';
+  baseUrl = 'https://localhost:44321/api/';
+
   constructor(private http: HttpClient) {}
 
   getProducts() {
