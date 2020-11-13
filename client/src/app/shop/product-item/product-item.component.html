@@ -3,6 +3,7 @@
     src="{{ product.pictureUrl }}"
     alt="{{ product.name }}"
     class="img-fluid bg-info"
+    routerLink="/shop/{{ product.id }}"
   />
   <div class="card-body d-flex flex-column">
     <a href="#">
@@ -20,6 +21,7 @@
       <button
         type="button"
         class="btn btn-outline-info fa fa-search-plus"
+        routerLink="/shop/{{ product.id }}"
       ></button>
     </div>
   </div>
