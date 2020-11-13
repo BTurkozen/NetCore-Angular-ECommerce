@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace API.Core.Specifications
+﻿namespace API.Core.Specifications
 {
     public class ProductSpecParams
     {
