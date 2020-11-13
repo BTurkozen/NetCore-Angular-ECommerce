@@ -16,7 +16,7 @@
           class="list-group-item"
           *ngFor="let brand of brands"
           [class.active]="brand.id === 0"
-          [class.active]="brand.id === this.brandIdSelected"
+          [class.active]="brand.id === this.shopParams.brandId"
           [value]="brand.id"
           (click)="onBrandSelected(brand.id)"
         >
@@ -29,7 +29,7 @@
         <li
           class="list-group-item"
           *ngFor="let type of types"
-          [class.active]="type.id === this.typeIdSelected"
+          [class.active]="type.id === this.shopParams.typeId"
           [value]="type.id"
           (click)="onTypeSelected(type.id)"
         >
@@ -41,9 +41,26 @@
     <section class="col-md-9">
       <div class="d-flex justify-content-between align-items-center pb-2">
         <header>
-          <span
-            >Showing <strong>10</strong> of <strong>18</strong> Results</span
+          <span *ngIf="this.totalCount && this.totalCount > 0"
+            >Showing
+            <strong>
+              <!-- Mesela 2. sayfadayım o an, 2'den 1 çıktı 1, pageSizeda 6 6ile 1 topla 7 yani 7. ifadedeyim demektir. -->
+              {{
+                (this.shopParams.pageNumber - 1) * this.shopParams.pageSize + 1
+              }}
+              -
+              {{
+                this.shopParams.pageNumber * this.shopParams.pageSize >
+                this.totalCount
+                  ? this.totalCount
+                  : this.shopParams.pageNumber * this.shopParams.pageSize
+              }}
+            </strong>
+            of <strong> {{ this.totalCount }} </strong> Results</span
           >
+          <span *ngIf="this.totalCount === 0">
+            There are <strong>0</strong> result for this filter
+          </span>
         </header>
         <div class="form-inline mt-2">
           <input
@@ -60,6 +77,23 @@
         <div class="col-md-4" *ngFor="let item of products">
           <app-product-item [product]="item"></app-product-item>
         </div>
+      </div>
+
+      <div
+        class="d-flex justify-content-center my-3"
+        *ngIf="this.totalCount > 0"
+      >
+        <pagination
+          [boundaryLinks]="true"
+          [totalItems]="this.totalCount"
+          (pageChanged)="onPageChange($event)"
+          [itemsPerPage]="this.shopParams.pageSize"
+          previousText="&lsaquo;"
+          nextText="&rsaquo;"
+          firstText="&laquo;"
+          lastText="&raquo;"
+        >
+        </pagination>
       </div>
     </section>
   </div>
